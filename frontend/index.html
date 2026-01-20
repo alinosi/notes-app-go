@@ -11,8 +11,8 @@
 
     <div class="container">
         <header>
-            <h1>Catatan Saya</h1>
-            <p class="subtitle">Mengatur ide-ide Anda dengan simpel.</p>
+            <h1>Self Notes</h1>
+            <p class="subtitle">Mencatat semua ilmu yang dipelajari agar bisa berguna nantinnya</p>
         </header>
 
         <main id="app">
@@ -44,6 +44,28 @@
                     </article>
             </section>
         </main>
+    </div>
+
+    <button class="fab-add" onclick="openAddModal()" title="Tambah Catatan">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+    </button>
+
+    <div id="add-modal" class="modal-overlay hidden">
+        <div class="modal-box slide-up">
+            <div class="modal-header">
+                <h4>Catatan Baru</h4>
+            </div>
+            <form id="note-form">
+                <div class="modal-body">
+                    <input type="text" id="note-title" placeholder="Judul Catatan" required>
+                    <textarea id="note-content" placeholder="Tulis sesuatu..." rows="5" required></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" onclick="closeAddModal()" class="btn-secondary">Batal</button>
+                    <button type="submit" class="btn-primary">Simpan Catatan</button>
+                </div>
+            </form>
+        </div>
     </div>
 
     <div id="delete-modal" class="modal-overlay hidden">

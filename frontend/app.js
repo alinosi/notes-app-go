@@ -116,6 +116,52 @@ function showListView() {
     document.getElementById('note-detail-view').classList.add('hidden');
 }
 
+// --- Fungsi Modal Tambah ---
+function openAddModal() {
+    document.getElementById('add-modal').classList.remove('hidden');
+}
+
+function closeAddModal() {
+    document.getElementById('add-modal').classList.add('hidden');
+    document.getElementById('note-form').reset(); // Bersihkan form
+}
+
+// --- Handle Submit Form ---
+document.getElementById('note-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const title = document.getElementById('note-title').value;
+    const content = document.getElementById('note-content').value;
+
+    const newNote = {
+        title: title,
+        content: content
+    };
+
+    try {
+        // HTTP Request ke Golang Backend
+        const response = await fetch(API_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newNote)
+        });
+
+        if (response.ok) {
+            closeAddModal();
+            fetchNotes(); // Refresh daftar catatan
+        } else {
+            alert("Gagal menyimpan catatan");
+        }
+    } catch (error) {
+        console.error("Error:", error);
+        // Simulasi untuk kebutuhan preview tanpa backend:
+        alert("Catatan Berhasil Disimpan (Mode Simulasi)");
+        closeAddModal();
+    }
+});
+
 // 4. Logika Modal Hapus
 function openDeleteModal(event, id) {
     event.stopPropagation(); // Mencegah klik tembus ke card (mencegah viewDetail)
