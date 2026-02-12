@@ -9,15 +9,6 @@ This project is intentionally designed like a real team workflow:
 - **Frontend** focuses on UI/UX, routing, state, and API integration readiness.
 - **Backend** focuses on API design, authentication, security, and database logic.
 
-### Tech stack
-![React](https://img.shields.io/badge/React-20232A?logo=react&logoColor=61DAFB)
-![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)
-![Go](https://img.shields.io/badge/Go-00ADD8?logo=go&logoColor=white)
-![Fiber](https://img.shields.io/badge/Fiber-00ADD8?logo=go&logoColor=white)
-![GORM](https://img.shields.io/badge/GORM-00ADD8?logo=go&logoColor=white)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?logo=postgresql&logoColor=white)
-![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white)
-
 ---
 ## Goals
 
@@ -64,6 +55,14 @@ This project is intentionally designed like a real team workflow:
 ---
 
 ## Application Specifications
+
+![React](https://img.shields.io/badge/React-20232A?logo=react&logoColor=61DAFB)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)
+![Go](https://img.shields.io/badge/Go-00ADD8?logo=go&logoColor=white)
+![Fiber](https://img.shields.io/badge/Fiber-00ADD8?logo=go&logoColor=white)
+![GORM](https://img.shields.io/badge/GORM-00ADD8?logo=go&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?logo=postgresql&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white)
 
 ### Frontend (React)
 Frontend is designed to be API-ready, but initially uses mock services.
