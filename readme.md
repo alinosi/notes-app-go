@@ -1,13 +1,13 @@
 # Notes App (Go + React) — Learning Project
 
-### Frontend
+### Tech stack
 ![React](https://img.shields.io/badge/React-20232A?logo=react&logoColor=61DAFB)
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)
-
-### Backend (planned)
 ![Go](https://img.shields.io/badge/Go-00ADD8?logo=go&logoColor=white)
 ![Fiber](https://img.shields.io/badge/Fiber-00ADD8?logo=go&logoColor=white)
 ![GORM](https://img.shields.io/badge/GORM-00ADD8?logo=go&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?logo=postgresql&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white)
 
 
 ## Overview
