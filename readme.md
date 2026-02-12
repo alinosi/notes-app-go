@@ -1,5 +1,15 @@
 # Notes App (Go + React) — Learning Project
 
+### Frontend
+![React](https://img.shields.io/badge/React-20232A?logo=react&logoColor=61DAFB)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)
+
+### Backend (planned)
+![Go](https://img.shields.io/badge/Go-00ADD8?logo=go&logoColor=white)
+![Fiber](https://img.shields.io/badge/Fiber-00ADD8?logo=go&logoColor=white)
+![GORM](https://img.shields.io/badge/GORM-00ADD8?logo=go&logoColor=white)
+
+
 ## Overview
 
 **Notes App** is a simple full-stack project built as a personal learning challenge.
