@@ -9,7 +9,6 @@ This project is intentionally designed like a real team workflow:
 - **Frontend** focuses on UI/UX, routing, state, and API integration readiness.
 - **Backend** focuses on API design, authentication, security, and database logic.
 
----
 ### Tech stack
 ![React](https://img.shields.io/badge/React-20232A?logo=react&logoColor=61DAFB)
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)
