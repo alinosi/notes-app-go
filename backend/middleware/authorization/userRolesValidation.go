@@ -1,8 +1,7 @@
-package main
-
+package authorization
 
 // import "fmt"
 
-func main () {
+func main() {
 
 }
