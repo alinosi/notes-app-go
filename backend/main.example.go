@@ -18,14 +18,14 @@ type User struct {
 }
 
 // notes dummy data
-type Note struct {
-	Note_Id    string `json:"id"`
-	User_id    string `json:"email"`
-	Text       string `json:"text"`
-	Created_at string `json:"created_at"`
-	Updated_at string `json:"updated_at"`
-	Deleted_at string `json:"deleted_at"`
-}
+// type Note struct {
+// 	Note_Id    string `json:"id"`
+// 	User_id    string `json:"email"`
+// 	Text       string `json:"text"`
+// 	Created_at string `json:"created_at"`
+// 	Updated_at string `json:"updated_at"`
+// 	Deleted_at string `json:"deleted_at"`
+// }
 
 func main() {
 
@@ -40,6 +40,7 @@ func main() {
 
 		// 4. ENCODING: Mengubah Struct Go menjadi teks JSON
 		json.NewEncoder(w).Encode(data)
+		// fmt.Printf(data.User_id)
 	})
 
 	// 5. START SERVER
