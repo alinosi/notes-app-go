@@ -16,6 +16,10 @@ type Notes struct {
 	DeletedAt *time.Time `json:"deleted_at,omitempty"`
 }
 
+type Message struct {
+	Message string `json:"message"`
+}
+
 func main() {
 	http.HandleFunc("/notes", func(w http.ResponseWriter, r *http.Request) {
 
@@ -32,17 +36,16 @@ func main() {
 			w.Header().Set("Content-Type", "application/json")
 
 			json.NewEncoder(w).Encode(sliceData)
-
 		case http.MethodPost:
+			var sliceData []Message
+
+			n1 := Message{"Rencana simpan data berhasil dideteksi"}
 			// header
+			sliceData = append(sliceData, n1)
 			w.Header().Set("Content-Type", "application/json")
 			w.WriteHeader(http.StatusCreated)
 			// body
-			w.Write([]byte("Metode berhasil dijalankan"))
-			json.NewEncoder(w).Encode(message)
-
-			
-
+			json.NewEncoder(w).Encode(sliceData)
 		default:
 			w.WriteHeader(http.StatusMethodNotAllowed)
 			w.Write([]byte("metode tidak diizinkan\n"))
