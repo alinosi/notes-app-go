@@ -48,11 +48,15 @@ func main() {
 			if err != nil {
 				w.WriteHeader(http.StatusBadRequest) // Error 400
 
-				w.Write([]byte("Format JSON kamu rusak"))
+				w.Write([]byte("Format JSON kamu rusak\n"))
 				return
 			}
 			// 4. Sekarang data sudah ada di variabel newNote
 			fmt.Printf("Data masuk: %s\n", newNote.Text)
+			json.NewEncoder(w).Encode(newNote)
+
+			w.Write([]byte("ini adalah data yang anda masukkan:"))
+			w.Write([]byte(newNote.Text))
 		default:
 			w.WriteHeader(http.StatusMethodNotAllowed)
 
@@ -60,6 +64,7 @@ func main() {
 		}
 	})
 
-	fmt.Println("server sudah berjalan di http://172.21.224.1:8080")
-	http.ListenAndServe("172.21.224.1:8080", nil)
+	// fmt.Println("server sudah berjalan di http://172.21.224.1:8080")
+	// http.ListenAndServe("172.21.224.1:8080", nil)
+	http.ListenAndServe(":8080", nil)
 }

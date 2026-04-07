@@ -100,5 +100,5 @@ func main() {
 	})
 
 	fmt.Println("server berhasil dijalankan pada localhost:8080")
-	http.ListenAndServe(":8080", nil)
+	http.ListenAndServe("127.0.0.1:8080", nil)
 }
