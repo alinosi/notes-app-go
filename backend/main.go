@@ -22,7 +22,7 @@ type Message struct {
 
 type Account struct {
 	Username string `json:"username"`
-	password string `json:"password"`
+	Password string `json:"password"`
 }
 
 func main() {
@@ -39,6 +39,7 @@ func main() {
 		json.NewEncoder(w).Encode(sliceData)
 		w.Write([]byte("\nSHA256{this-is-flag}"))
 	})
+
 	http.HandleFunc("/detail", func(w http.ResponseWriter, r *http.Request) {
 		var sliceData []Notes
 
@@ -60,14 +61,33 @@ func main() {
 		}
 		w.Write([]byte("\ndetail page"))
 	})
+
 	http.HandleFunc("/login", func(w http.ResponseWriter, r *http.Request) {
 		var credentials Account
 
 		switch r.Method {
 
+		case http.MethodGet:
+			w.Header().Set("content-type", "application/json")
+
+			w.WriteHeader(http.StatusOK)
+
+			json.NewEncoder(w).Encode(Message{"ini adalah halaman login"})
+
 		case http.MethodPost:
 
+			// read the data from http stream
 			err := json.NewDecoder(r.Body).Decode(&credentials)
+
+			guard := r.Header.Get("Origin")
+
+			// csrf guardian simulation
+			if guard != "localhost:8080/login" {
+				w.WriteHeader(http.StatusBadGateway)
+				w.Header().Set("content-type", "aplication/json")
+
+				json.NewEncoder(w).Encode(Message{"anda bukan user resmi"})
+			}
 
 			if err != nil {
 				w.WriteHeader(http.StatusBadRequest) // Error 400
@@ -76,14 +96,16 @@ func main() {
 				return
 			}
 
+			w.Header().Set("content-type", "application/json")
 			// database password simulation
-			if credentials.Username == "admin" && credentials.password == "admin123" {
-				w.Header().Set("Content-Type", "applicaton/json")
+			if credentials.Username == "admin" && credentials.Password == "admin123" {
+				// w.Header().Set("Content-Type", "applicaton/json")
 
 				w.WriteHeader(http.StatusAccepted)
 
 				json.NewEncoder(w).Encode(Message{"login berhasil dilakukan"})
 			} else {
+				// w.Header().Set("Content-Type", "applicaton/json")
 				w.WriteHeader(http.StatusOK)
 
 				json.NewEncoder(w).Encode(Message{"password/username salah"})
