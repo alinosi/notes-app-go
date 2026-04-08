@@ -20,6 +20,11 @@ type Message struct {
 	Message string `json:"message"`
 }
 
+type Account struct {
+	Username string `json:"username"`
+	password string `json:"password"`
+}
+
 func main() {
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		var sliceData []Notes
@@ -56,41 +61,34 @@ func main() {
 		w.Write([]byte("\ndetail page"))
 	})
 	http.HandleFunc("/login", func(w http.ResponseWriter, r *http.Request) {
+		var credentials Account
+
 		switch r.Method {
 
 		case http.MethodPost:
 
-			var err *int
-			// simulation if the server has run correctly (password is true)
-			err = nil
+			err := json.NewDecoder(r.Body).Decode(&credentials)
 
 			if err != nil {
-				message := Message{"Kesalahan server"}
+				w.WriteHeader(http.StatusBadRequest) // Error 400
 
-				w.WriteHeader(http.StatusBadGateway)
-				w.Header().Set("Content-Type", "application/json")
-
-				json.NewEncoder(w).Encode(message)
+				w.Write([]byte("Format JSON kamu rusak\n"))
+				return
 			}
 
-			// credentials simulation
-			accountValidations := true
+			// database password simulation
+			if credentials.Username == "admin" && credentials.password == "admin123" {
+				w.Header().Set("Content-Type", "applicaton/json")
 
-			if accountValidations == true {
-				message := Message{"Login berhasil"}
+				w.WriteHeader(http.StatusAccepted)
 
-				w.Header().Set("Content-Type", "application/json")
-				w.WriteHeader(http.StatusOK)
-
-				json.NewEncoder(w).Encode(message)
+				json.NewEncoder(w).Encode(Message{"login berhasil dilakukan"})
 			} else {
-				message := Message{"Username/Password salah"}
-
-				w.Header().Set("Content-Type", "application/json")
 				w.WriteHeader(http.StatusOK)
 
-				json.NewEncoder(w).Encode(message)
+				json.NewEncoder(w).Encode(Message{"password/username salah"})
 			}
+
 		default:
 			w.WriteHeader(http.StatusBadRequest)
 			message := Message{"status tidak diizinkan"}
@@ -100,5 +98,5 @@ func main() {
 	})
 
 	fmt.Println("server berhasil dijalankan pada localhost:8080")
-	http.ListenAndServe("127.0.0.1:8080", nil)
+	http.ListenAndServe(":8080", nil)
 }

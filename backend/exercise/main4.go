@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"time"
 )
@@ -52,11 +51,12 @@ func main() {
 				return
 			}
 			// 4. Sekarang data sudah ada di variabel newNote
-			fmt.Printf("Data masuk: %s\n", newNote.Text)
+			w.WriteHeader(http.StatusCreated) // Error 400
+			// fmt.Printf("Data masuk: %s\n", newNote.Text)
 			json.NewEncoder(w).Encode(newNote)
 
-			w.Write([]byte("ini adalah data yang anda masukkan:"))
-			w.Write([]byte(newNote.Text))
+			// w.Write([]byte("ini adalah data yang anda masukkan:"))
+			// w.Write([]byte(newNote.Text))
 		default:
 			w.WriteHeader(http.StatusMethodNotAllowed)
 
