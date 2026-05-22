@@ -69,9 +69,7 @@ func main() {
 
 		case http.MethodGet:
 			w.Header().Set("content-type", "application/json")
-
 			w.WriteHeader(http.StatusOK)
-
 			json.NewEncoder(w).Encode(Message{"ini adalah halaman login"})
 
 		case http.MethodPost:
@@ -83,10 +81,9 @@ func main() {
 
 			// csrf guardian simulation
 			if guard != "localhost:8080/login" {
-				w.WriteHeader(http.StatusBadGateway)
-				w.Header().Set("content-type", "aplication/json")
-
-				json.NewEncoder(w).Encode(Message{"anda bukan user resmi"})
+				http.Redirect(w, r, "login", http.StatusMovedPermanently)
+				json.NewEncoder(w).Encode(Message{"you are not from allowed origin"})
+				return
 			}
 
 			if err != nil {
@@ -119,6 +116,11 @@ func main() {
 		}
 	})
 
-	fmt.Println("server berhasil dijalankan pada localhost:8080")
-	http.ListenAndServe(":8080", nil)
+	address := "192.168.1.4:80"
+	// address := ":80"
+	// address := ":80"
+
+	fmt.Println("server berhasil dijalankan pada %d", address)
+	http.ListenAndServe(address, nil)
+	// http.ListenAndServe(":80", nil)
 }
