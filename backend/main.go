@@ -120,7 +120,7 @@ func main() {
 	// address := ":80"
 	// address := ":80"
 
-	fmt.Println("server berhasil dijalankan pada %d", address)
+	fmt.Println("server berhasil dijalankan pada %s", address)
 	http.ListenAndServe(address, nil)
 	// http.ListenAndServe(":80", nil)
 }

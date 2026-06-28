@@ -1,0 +1,18 @@
+# version: '3.8'
+
+services:
+  database_notes:
+    image: postgres:15-alpine
+    container_name: postgres_app_notes
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password_rahasia
+      POSTGRES_DB: notes_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - data_db_notes:/var/lib/postgresql/data
+
+volumes:
+  data_db_notes:
