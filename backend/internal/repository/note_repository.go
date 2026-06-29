@@ -1,0 +1,51 @@
+package repository
+
+import (
+	"backend/internal/model"
+
+	"github.com/jmoiron/sqlx"
+)
+
+// NoteRepository defines the contract for note database operations
+type NoteRepository interface {
+	CreateNote(note *model.Note) error
+}
+
+// noteRepositoryImpl is the concrete implementation of NoteRepository
+type noteRepositoryImpl struct {
+	db *sqlx.DB
+}
+
+// NewNoteRepository acts as a constructor to inject the database connection
+func NewNoteRepository(db *sqlx.DB) NoteRepository {
+	return &noteRepositoryImpl{
+		db: db,
+	}
+}
+
+// CreateNote inserts a new note into the database
+func (r *noteRepositoryImpl) CreateNote(note *model.Note) error {
+	// The SQL query using Named Parameters (sqlx magic)
+	query := `
+		INSERT INTO notes (user_id, title, content) 
+		VALUES (:user_id, :title, :content) 
+		RETURNING id, created_at, updated_at
+	`
+
+	// Execute the named query and map the returned values back to the struct
+	rows, err := r.db.NamedQuery(query, note)
+	if err != nil {
+		return err
+	}
+	defer rows.Close()
+
+	// Fetch the generated ID and timestamps from the RETURNING clause
+	if rows.Next() {
+		err = rows.StructScan(note)
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
