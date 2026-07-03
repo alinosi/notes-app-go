@@ -12,7 +12,7 @@ type NoteRepository interface {
 	UpdateNote(note *model.Note) error
 	// PatchNote(note *model.Note) error
 	DeleteNote(note *model.Note) error
-	SearchNote(note *model.Note) error
+	ReadNote(note *model.Note) error
 }
 
 // noteRepositoryImpl is the concrete implementation of NoteRepository
@@ -107,7 +107,7 @@ func (r *noteRepositoryImpl) DeleteNote(note *model.Note) error {
 }
 
 // CreateNote inserts a new note into the database
-func (r *noteRepositoryImpl) SearchNote(note *model.Note) error {
+func (r *noteRepositoryImpl) ReadNote(note *model.Note) error {
 	// The SQL query using Named Parameters (sqlx magic)
 	query := `
 		INSERT INTO notes (user_id, title, content) 
