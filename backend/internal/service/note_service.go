@@ -6,20 +6,35 @@ import (
 )
 
 type NoteService interface {
-	CreateNote(note *model.Note) error
+	SaveNote(note *model.Note) error
+	UpdateNote(note *model.Note) error
 }
 
 type noteServiceImpl struct {
 	repo repository.NoteRepository
 }
 
-// dummy code for simulation
-func (s *noteServiceImpl) CreateNote(note *model.Note) error {
-	return nil
-}
-
 func NewNoteService(repo repository.NoteRepository) NoteService {
 	return &noteServiceImpl{
 		repo: repo,
 	}
+}
+
+// dummy code for simulation
+func (s *noteServiceImpl) SaveNote(note *model.Note) error {
+	err := s.repo.CreateNote(note)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (s *noteServiceImpl) UpdateNote(note *model.Note) error {
+	// user credentials validantions
+
+	err := s.repo.UpdateNote(note)
+	if err != nil {
+		return err
+	}
+	return nil
 }

@@ -20,13 +20,6 @@ type noteRepositoryImpl struct {
 	db *sqlx.DB
 }
 
-// NewNoteRepository acts as a constructor to inject the database connection
-func NewNoteRepository(db *sqlx.DB) NoteRepository {
-	return &noteRepositoryImpl{
-		db: db,
-	}
-}
-
 // CreateNote inserts a new note into the database
 func (r *noteRepositoryImpl) CreateNote(note *model.Note) error {
 	// The SQL query using Named Parameters (sqlx magic)
@@ -131,4 +124,11 @@ func (r *noteRepositoryImpl) ReadNote(note *model.Note) error {
 	}
 
 	return nil
+}
+
+// NewNoteRepository acts as a constructor to inject the database connection
+func NewNoteRepository(db *sqlx.DB) NoteRepository {
+	return &noteRepositoryImpl{
+		db: db,
+	}
 }
