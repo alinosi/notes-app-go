@@ -51,9 +51,10 @@ func (r *noteRepositoryImpl) CreateNote(note *model.Note) error {
 func (r *noteRepositoryImpl) UpdateNote(note *model.Note) error {
 	// The SQL query using Named Parameters (sqlx magic)
 	query := `
-		INSERT INTO notes (user_id, title, content) 
-		VALUES (:user_id, :title, :content) 
-		RETURNING id, created_at, updated_at
+		UPDATE notes (user_id, title, content) 
+		VALUES (:user_id, :title, :content)
+		WHERE user_id = :user_id 
+		RETURNING id, updated_at
 	`
 
 	// Execute the named query and map the returned values back to the struct
@@ -79,7 +80,7 @@ func (r *noteRepositoryImpl) DeleteNote(note *model.Note) error {
 	// The SQL query using Named Parameters (sqlx magic)
 	query := `
 		DELETE FROM notes WHERE notes_id = :notes_id
-	`
+		`
 
 	// Execute the named query and map the returned values back to the struct
 	rows, err := r.db.NamedQuery(query, note)

@@ -8,7 +8,7 @@ import (
 )
 
 type NoteService interface {
-	CreateNote(userID, title, content string) (note *model.Note, err error)
+	CreateNote(userID, title, content string) (*model.Note, error)
 }
 
 type noteServiceImpl struct {
@@ -22,7 +22,7 @@ func NewNoteService(repo repository.NoteRepository) NoteService {
 }
 
 // CreateNote handles the business logic before saving to the database
-func (s *noteServiceImpl) CreateNote(userID, title, content string) (note *model.Note, err error) {
+func (s *noteServiceImpl) CreateNote(userID, title, content string) (*model.Note, error) {
 	// 1. Business Validation
 	if utf8.RuneCountInString(title) == 0 {
 		return nil, errors.New("title cannot be empty")
