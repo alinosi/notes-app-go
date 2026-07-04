@@ -3,11 +3,12 @@ package service
 import (
 	"backend/internal/model"
 	"backend/internal/repository"
+	"errors"
+	"unicode/utf8"
 )
 
 type NoteService interface {
-	SaveNote(note *model.Note) error
-	UpdateNote(note *model.Note) error
+	CreateNote(userID, title, content string) (note *model.Note, err error)
 }
 
 type noteServiceImpl struct {
@@ -20,21 +21,26 @@ func NewNoteService(repo repository.NoteRepository) NoteService {
 	}
 }
 
-// dummy code for simulation
-func (s *noteServiceImpl) SaveNote(note *model.Note) error {
+// CreateNote handles the business logic before saving to the database
+func (s *noteServiceImpl) CreateNote(userID, title, content string) (note *model.Note, err error) {
+	// 1. Business Validation
+	if utf8.RuneCountInString(title) == 0 {
+		return nil, errors.New("title cannot be empty")
+	}
+
+	// 2. Assemble the Struct Blueprint
+	note := &model.Note{
+		UserID:  userID,
+		Title:   title,
+		Content: content,
+	}
+
+	// 3. Command the Repository to save the data
 	err := s.repo.CreateNote(note)
-	if err != nil {
-		return err
-	}
-	return nil
-}
 
-func (s *noteServiceImpl) UpdateNote(note *model.Note) error {
-	// user credentials validantions
-
-	err := s.repo.UpdateNote(note)
 	if err != nil {
-		return err
+		return nil, err
 	}
-	return nil
+
+	return note, nil
 }
