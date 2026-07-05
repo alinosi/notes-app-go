@@ -17,15 +17,15 @@ type userServiceImpl struct {
 	repo repository.UserRepository
 }
 
-func (s *userServiceImpl) CreateUser(email, username, passowrd string) (*model.User, error) {
-	if utf8.RuneCountInString(passowrd) == 0 {
+func (s *userServiceImpl) CreateUser(email, username, password string) (*model.User, error) {
+	if utf8.RuneCountInString(password) == 0 {
 		return nil, errors.New("passowrd cannot be empty")
 	}
 
 	user := &model.User{
 		Username: username,
 		Email:    email,
-		Passowrd: passowrd,
+		Password: password,
 	}
 
 	if mark, _ := s.repo.GetUserByEmail(user.Email); mark == true {
