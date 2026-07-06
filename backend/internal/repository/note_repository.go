@@ -82,19 +82,10 @@ func (r *noteRepositoryImpl) DeleteNote(note *model.Note) error {
 		DELETE FROM notes WHERE notes_id = :notes_id
 		`
 
-	// Execute the named query and map the returned values back to the struct
-	rows, err := r.db.NamedQuery(query, note)
+	// Execute the named exec
+	_, err := r.db.NamedExec(query, note)
 	if err != nil {
 		return err
-	}
-	defer rows.Close()
-
-	// Fetch the generated ID and timestamps from the RETURNING clause
-	if rows.Next() {
-		err = rows.StructScan(note)
-		if err != nil {
-			return err
-		}
 	}
 
 	return nil
