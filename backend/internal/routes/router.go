@@ -36,6 +36,7 @@ func Setup(app *fiber.App, db *sqlx.DB) {
 	// Grup khusus Notes -> URL akan menjadi "/api/v1/notes"
 	notes := api.Group("/notes")
 	notes.Post("/", noteHandler.CreateNote)
+	notes.Post("/delete", noteHandler.DeleteNote)
 	// notes.Get("/", noteHandler.GetAllNotes)       <-- Untuk tugas mandirimu nanti
 	// notes.Get("/:id", noteHandler.GetNoteByID)    <-- Untuk tugas mandirimu nanti
 	// notes.Put("/:id", noteHandler.UpdateNote)     <-- Untuk tugas mandirimu nanti

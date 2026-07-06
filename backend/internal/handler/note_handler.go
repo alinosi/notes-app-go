@@ -47,3 +47,32 @@ func (h *NoteHandler) CreateNote(c *fiber.Ctx) error {
 		"data":    note,
 	})
 }
+
+func (h *NoteHandler) DeleteNote(c *fiber.Ctx) error {
+	// 1. Prepare an empty struct to read the incoming JSON request
+	var req struct {
+		ID     string `json:"id"`
+		NoteID string `json:"note_id"`
+	}
+
+	// 2. Parse the JSON body into the 'req' struct
+	if err := c.BodyParser(&req); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"error": "Invalid request body format",
+		})
+	}
+
+	// 3. Pass the extracted data to the Service Layer (Business Logic)
+	err := h.service.DeleteNote(req.ID, req.NoteID)
+	if err != nil {
+		// If the Service throws an error (e.g., notefailure), return it to the user
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"error": err.Error(),
+		})
+	}
+
+	// 4. Return a success response to the Frontend
+	return c.Status(fiber.StatusCreated).JSON(fiber.Map{
+		"message": "Note deleted successfully",
+	})
+}

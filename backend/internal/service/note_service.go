@@ -51,10 +51,11 @@ func (s *noteServiceImpl) DeleteNote(noteID, userID string) error {
 	// 1. Business Validation
 	err := s.noteRightsValidation(noteID, userID)
 	if err != nil {
-		return errors.New("The user does not have access to this note.")
+		// Check if the user attempting to delete the note is indeed the note's owner.
+		return errors.New("The user does not have access to this note.") // or perhaps the note is not found
 	}
 
-	// 3. Command the Repository to save the data
+	// 2. Command the Repository to save the data
 	err = s.repo.DeleteNote(noteID)
 
 	if err != nil {
