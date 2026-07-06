@@ -9,6 +9,7 @@ import (
 
 type NoteService interface {
 	CreateNote(userID, title, content string) (*model.Note, error)
+	DeleteNote(userID, notesID string) error
 }
 
 type noteServiceImpl struct {
@@ -43,4 +44,31 @@ func (s *noteServiceImpl) CreateNote(userID, title, content string) (*model.Note
 	}
 
 	return note, nil
+}
+
+// CreateNote handles the business logic before saving to the database
+func (s *noteServiceImpl) DeleteNote(noteID, userID string) error {
+	// 1. Business Validation
+	err := s.noteRightsValidation(noteID, userID)
+	if err != nil {
+		return errors.New("The user does not have access to this note.")
+	}
+
+	// 3. Command the Repository to save the data
+	err = s.repo.DeleteNote(noteID)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (s *noteServiceImpl) noteRightsValidation(noteID, userID string) error {
+	_, err := s.repo.ReadNoteByUserAndNoteID(noteID, userID)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
